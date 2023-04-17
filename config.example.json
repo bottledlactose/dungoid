@@ -1,3 +1,5 @@
 {
-	"token": "<YOUR TOKEN HERE>"
+	"token": "<YOUR TOKEN HERE>",
+  "clientId": "<YOUR CLIENT ID HERE>",
+  "guildId": "<YOUR GUILD ID HERE>"
 }

@@ -1,0 +1,22 @@
+{
+  "name": "dungoid",
+  "version": "1.0.0",
+  "description": "A general-purpose roleplaying Discord bot.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bottledlactose/dungoid.git"
+  },
+  "author": "bottledlactose",
+  "license": "UNLICENSED",
+  "bugs": {
+    "url": "https://github.com/bottledlactose/dungoid/issues"
+  },
+  "homepage": "https://github.com/bottledlactose/dungoid#readme",
+  "dependencies": {
+    "discord.js": "^14.9.0"
+  }
+}

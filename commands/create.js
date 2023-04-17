@@ -1,6 +1,9 @@
 const { SlashCommandBuilder } = require('discord.js');
 const embed = require('../embed');
 
+const { QuickDB } = require('quick.db');
+const db = new QuickDB();
+
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('create')
@@ -27,6 +30,25 @@ module.exports = {
     const name = interaction.options.getString('name');
     const prefix = interaction.options.getString('prefix');
     const avatar = interaction.options.getAttachment('avatar');
+
+    const userId = interaction.user.id;
+    let characters = await db.get(`characters_${userId}`) || [];
+
+    for (const i in characters) {
+      if (characters[i].prefix === prefix) {
+        const response = embed.error(client)
+          .setDescription(`The prefix \`${prefix}\` is already in use by another character!`);
+
+        await interaction.reply({ embeds: [response], ephemeral: true });
+        return;
+      }
+    }
+
+    await db.set(`characters_${userId}`, [...characters, {
+      name: name,
+      prefix: prefix,
+      avatarUrl: avatar.url
+    }]);
 
     const response = embed.default(client)
       .setDescription(`You can now use your character by typing \`${prefix}Hello, world!\``);

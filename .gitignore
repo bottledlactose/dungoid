@@ -3,3 +3,6 @@ node_modules/
 
 # Exclude configuration file
 config.json
+
+# Exclude databse file
+json.sqlite

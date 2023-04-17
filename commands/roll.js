@@ -13,9 +13,9 @@ module.exports = {
 	async execute(interaction, client) {
     const sides = interaction.options.getInteger('sides');
 
-    if (sides < 1) {
+    if (sides < 1 || sides > 100) {
       const reply = embed.error(client)
-        .setDescription('The amount of sides must be greater than **0**!');
+        .setDescription('The amount of sides must be between **1** and **100**!');
 
       await interaction.reply({ embeds: [reply] });
       return;

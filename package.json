@@ -4,6 +4,7 @@
   "description": "A general-purpose roleplaying Discord bot.",
   "main": "index.js",
   "scripts": {
+    "deploy": "node ./scripts/deploy.js",
     "dev": "nodemon ./index.js"
   },
   "repository": {

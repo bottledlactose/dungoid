@@ -1,0 +1,5 @@
+# Exclude Node.js modules
+node_modules/
+
+# Exclude configuration file
+config.json

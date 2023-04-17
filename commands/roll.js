@@ -9,22 +9,16 @@ module.exports = {
         option
           .setName('sides')
           .setDescription('The amount of sides on the dice')
-          .setRequired(true)),
+          .setRequired(true)
+          .setMinValue(1)
+          .setMaxValue(100)),
 	async execute(interaction, client) {
     const sides = interaction.options.getInteger('sides');
-
-    if (sides < 1 || sides > 100) {
-      const reply = embed.error(client)
-        .setDescription('The amount of sides must be between **1** and **100**!');
-
-      await interaction.reply({ embeds: [reply] });
-      return;
-    }
-
     const result = Math.floor(Math.random() * sides) + 1;
-    const reply = embed.success(client)
+
+    const response = embed.success(client)
       .setDescription(`You rolled **${result}** out of **${sides}**!`);
 
-		await interaction.reply({ embeds: [reply] });
+		await interaction.reply({ embeds: [response] });
 	},
 };

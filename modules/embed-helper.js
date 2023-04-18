@@ -1,9 +1,9 @@
 const { EmbedBuilder } = require('discord.js');
 
 const colors = {
-  error: 0xff4133,
-  success: 0x9dff26,
-  info: 0x2b59ff,
+  error: 0xff5921,
+  success: 0x78ed2b,
+  info: 0x305df0,
 };
 
 const base = client => {

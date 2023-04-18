@@ -11,10 +11,17 @@ module.exports = {
     const embed = embedModule.info(client);
 
     if (characters.length == 0) {
-      embed.setDescription('You have no characters yet!');
+      // Set up a fallback message since no characters were found
+      embed.setDescription('You have no characters yet! You can create one using \`/create\`');
     } else {
-      for (const c of characters) {
-        embed.addFields({ name: c.name, value: `Prefix: \`${c.prefix}\`` });
+      embed.setTitle('Characters');
+
+      for (const i in characters) {
+        // Add a new field entry for the current character
+        embed.addFields({
+          name: characters[i].name,
+          value: `Prefix: \`${characters[i].prefix}\``,
+        });
       }
     }
 

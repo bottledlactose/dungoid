@@ -34,8 +34,8 @@ module.exports = {
     const userId = interaction.user.id;
     let characters = await db.get(`characters_${userId}`) || [];
 
-    for (const i in characters) {
-      if (characters[i].prefix === prefix) {
+    for (const character of characters) {
+      if (character.prefix === prefix) {
         const response = embed.error(client)
           .setDescription(`The prefix \`${prefix}\` is already in use by another character!`);
 

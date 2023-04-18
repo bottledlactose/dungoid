@@ -1,5 +1,5 @@
 const { SlashCommandBuilder } = require('discord.js');
-const embedHelper = require('../modules/embed-helper');
+const embedModule = require('../modules/embed');
 const characterModule = require('../modules/character');
 
 module.exports = {
@@ -8,7 +8,7 @@ module.exports = {
 		.setDescription('Lists all of your currenct characters'),
 	async execute(interaction, client) {
     const characters = await characterModule.get(interaction.user);
-    const embed = embedHelper.info(client);
+    const embed = embedModule.info(client);
 
     if (characters.length == 0) {
       embed.setDescription('You have no characters yet!');

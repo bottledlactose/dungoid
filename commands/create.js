@@ -1,5 +1,5 @@
 const { SlashCommandBuilder } = require('discord.js');
-const embedHelper = require('../modules/embed-helper');
+const embedModule = require('../modules/embed');
 const characterModule = require('../modules/character');
 
 const { QuickDB } = require('quick.db');
@@ -36,7 +36,7 @@ module.exports = {
 
     for (const c of characters) {
       if (c.prefix === prefix) {
-        const embed = embedHelper.error(client)
+        const embed = embedModule.error(client)
           .setDescription(`The prefix \`${prefix}\` is already in use by another character!`);
 
         await interaction.reply({ embeds: [embed], ephemeral: true });
@@ -50,7 +50,7 @@ module.exports = {
       avatarURL: avatar.url,
     }]);
 
-    const embed = embedHelper.success(client)
+    const embed = embedModule.success(client)
       .setDescription(`You can now use your character by using \`/say ${prefix} Hello, world!\``);
 
     await interaction.reply({ embeds: [embed], ephemeral: true });

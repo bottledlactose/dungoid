@@ -1,5 +1,6 @@
 const { SlashCommandBuilder } = require('discord.js');
 const embedHelper = require('../modules/embed-helper');
+const characterModule = require('../modules/character');
 
 const { QuickDB } = require('quick.db');
 const db = new QuickDB();
@@ -23,7 +24,7 @@ module.exports = {
     const prefix = interaction.options.getString('prefix');
     const message = interaction.options.getString('message');
 
-    const characters = await db.get(`characters_${interaction.user.id}`);
+    const characters = await characterModule.get(interaction.user);
     let character = null;
 
     for (const c of characters) {
@@ -55,7 +56,7 @@ module.exports = {
     }
 
     await webhook.send({
-      avatarURL: character.avatarUrl,
+      avatarURL: character.avatarURL,
       username: character.name,
       content: message,
     });

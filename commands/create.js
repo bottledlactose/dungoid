@@ -51,8 +51,8 @@ module.exports = {
     }]);
 
     const response = embed.default(client)
-      .setDescription(`You can now use your character by typing \`${prefix}Hello, world!\``);
+      .setDescription(`You can now use your character by using \`/say ${prefix} Hello, world!\``);
 
-    await interaction.reply({ embeds: [response] });
+    await interaction.reply({ embeds: [response], ephemeral: true });
 	},
 };

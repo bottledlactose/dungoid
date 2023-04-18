@@ -1,5 +1,5 @@
 const { SlashCommandBuilder } = require('discord.js');
-const embed = require('../embed');
+const embedHelper = require('../modules/embed-helper');
 
 const { QuickDB } = require('quick.db');
 const db = new QuickDB();
@@ -34,10 +34,10 @@ module.exports = {
     }
 
     if (!character) {
-      const response = embed.error(client)
+      const embed = embedHelper.error(client)
         .setDescription(`You don't have a character with prefix \`${prefix}\`!`);
 
-      await interaction.reply({ embeds: [response], ephemeral: true });
+      await interaction.reply({ embeds: [embed], ephemeral: true });
       return;
     }
 
@@ -60,11 +60,11 @@ module.exports = {
       content: message,
     });
 
-    const response = embed.success(client)
+    const embed = embedHelper.success(client)
       .setTitle('Done!')
       .setDescription(`Your message has been successfully posted as **${character.name}**!`);
 
-    await interaction.reply({ embeds: [response], ephemeral: true });
+    await interaction.reply({ embeds: [embed], ephemeral: true });
     setTimeout(() => interaction.deleteReply(), 2500);
 	},
 };

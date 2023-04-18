@@ -65,6 +65,6 @@ module.exports = {
       .setDescription(`Your message has been successfully posted as **${character.name}**!`);
 
     await interaction.reply({ embeds: [response], ephemeral: true });
-    setTimeout(() => interaction.deleteReply(), 1750);
+    setTimeout(() => interaction.deleteReply(), 2500);
 	},
 };

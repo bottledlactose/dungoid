@@ -1,25 +1,20 @@
 const { SlashCommandBuilder } = require('discord.js');
 const embedHelper = require('../modules/embed-helper');
-
-const { QuickDB } = require('quick.db');
-const db = new QuickDB();
+const characterModule = require('../modules/character');
 
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('list')
-		.setDescription('Rolls a dice with the given amount of sides'),
+		.setDescription('Lists all of your currenct characters'),
 	async execute(interaction, client) {
-    const characters = await db.get(`characters_${interaction.user.id}`);
+    const characters = await characterModule.get(interaction.user);
     const embed = embedHelper.info(client);
 
     if (characters.length == 0) {
       embed.setDescription('You have no characters yet!');
     } else {
       for (const c of characters) {
-        embed.addFields({
-          name: c.name,
-          value: `Prefix: \`${c.prefix}\``
-        });
+        embed.addFields({ name: c.name, value: `Prefix: \`${c.prefix}\`` });
       }
     }
 

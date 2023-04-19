@@ -14,6 +14,7 @@ module.exports = {
           .setMaxValue(100)),
 	async execute(interaction, client) {
     const sides = interaction.options.getInteger('sides');
+    // Generate a random number based on the amount of sides to use
     const result = Math.floor(Math.random() * sides) + 1;
 
     const embed = embedModule.info(client)

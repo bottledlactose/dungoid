@@ -1,6 +1,6 @@
 const { SlashCommandBuilder } = require('discord.js');
-const embedModule = require('../modules/embed');
 const characterModule = require('../modules/character');
+const embedModule = require('../modules/embed');
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -31,6 +31,7 @@ module.exports = {
 
     let characters = await characterModule.get(interaction.user);
 
+    // Make sure the user doesn't exceed the maximum amount of configured character
     if (characters.length + 1 >= config.maxCharacters) {
 
       const embed = embedModule.error(client)
@@ -41,6 +42,7 @@ module.exports = {
       return;
     }
 
+    // Make sure the user is actually uploading an image
     if (!avatar.contentType.startsWith('image/')) {
 
       const embed = embedModule.error(client)
@@ -51,6 +53,7 @@ module.exports = {
       return;
     }
 
+    // Let's check if the provided prefix isn't in use yet
     for (const c of characters) {
       if (c.prefix === prefix) {
         const embed = embedModule.error(client)
@@ -62,6 +65,7 @@ module.exports = {
       }
     }
 
+    // Add the newly created character to the user's character dataset
     await characterModule.set(interaction.user, [...characters, {
       name: name,
       prefix: prefix,

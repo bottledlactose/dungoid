@@ -20,6 +20,17 @@ module.exports = {
         .setDescription(`You have a total of **${characters.length}** characters! `
           + `You can create new characters using \`/create\` and delete them using \`/delete\`.`);
 
+      // Sort all characters by display name
+      characters.sort((a, b) => {
+        if (a.name < b.name)
+          return -1;
+
+        if (a.name > b.name)
+          return 1;
+
+        return 0;
+      });
+
       for (const i in characters) {
         // Add a new field entry for the current character
         embed.addFields({

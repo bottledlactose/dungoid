@@ -12,7 +12,8 @@ module.exports = {
 
     if (characters.length == 0) {
       // Set up a fallback message since no characters were found
-      embed.setDescription('You have no characters yet! You can create one using \`/create\`');
+      embed.setDescription('You have no characters yet! '
+        + 'Start by creating one using \`/create\`');
     } else {
       embed.setTitle('Characters');
 
@@ -20,7 +21,8 @@ module.exports = {
         // Add a new field entry for the current character
         embed.addFields({
           name: characters[i].name,
-          value: `Prefix: \`${characters[i].prefix}\``,
+          value: `prefix: \`${characters[i].prefix}\``
+            + ` · [avatar](${characters[i].avatarURL})`,
         });
       }
     }

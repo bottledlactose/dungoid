@@ -2,9 +2,6 @@ const { SlashCommandBuilder } = require('discord.js');
 const embedModule = require('../modules/embed');
 const characterModule = require('../modules/character');
 
-const { QuickDB } = require('quick.db');
-const db = new QuickDB();
-
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('say')

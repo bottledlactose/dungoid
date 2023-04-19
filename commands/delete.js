@@ -36,7 +36,8 @@ module.exports = {
 
     const embed = embedModule.error(client)
       .setTitle('Failed to delete character!')
-      .setDescription(`You don't have any character with the prefix \`${prefix}\`!`);
+      .setDescription(`You don't have any character with the prefix \`${prefix}\`! `
+        + `You can view your characters with \`/list\`.`);
 
     await interaction.reply({ embeds: [embed], ephemeral: true });
 	},

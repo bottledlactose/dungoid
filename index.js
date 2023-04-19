@@ -1,6 +1,6 @@
 const fs = require('node:fs');
 const path = require('node:path');
-const { Client, Collection, Events, GatewayIntentBits } = require('discord.js');
+const { Client, Collection, Events, GatewayIntentBits, ActivityType } = require('discord.js');
 const config = require('./config.json');
 
 const client = new Client({ intents: [GatewayIntentBits.Guilds] });
@@ -22,6 +22,10 @@ for (const file of commandFiles) {
 
 client.once(Events.ClientReady, c => {
 	console.log(`Ready! Logged in as ${c.user.tag}`);
+
+  client.user.setPresence({
+    activities: [{ name: `/create /list /roll`, type: ActivityType.Listening }]
+  });
 });
 
 client.on(Events.InteractionCreate, async interaction => {

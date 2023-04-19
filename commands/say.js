@@ -1,6 +1,6 @@
 const { SlashCommandBuilder, PermissionsBitField } = require('discord.js');
-const embedModule = require('../modules/embed');
 const characterModule = require('../modules/character');
+const embedModule = require('../modules/embed');
 
 module.exports = {
 	data: new SlashCommandBuilder()

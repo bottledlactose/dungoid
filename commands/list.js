@@ -15,7 +15,10 @@ module.exports = {
       embed.setDescription('You have no characters yet! '
         + 'Start by creating one using \`/create\`');
     } else {
-      embed.setTitle('Characters');
+      embed
+        .setTitle('Characters')
+        .setDescription(`You have a total of **${characters.length}** characters! `
+          + `You can create new characters using \`/create\` and delete them using \`/delete\`.`);
 
       for (const i in characters) {
         // Add a new field entry for the current character

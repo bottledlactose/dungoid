@@ -2,9 +2,9 @@ const { EmbedBuilder } = require('discord.js');
 
 // Constant color codes used in type-specific embeds
 const colors = {
-  error: 0xff5921,
-  success: 0x78ed2b,
-  info: 0x305df0,
+  error: 0xf47b67,
+  success: 0x23a55a,
+  info: 0x5865f2,
 };
 
 // Provide a convenient base for the actual embed types to build off of

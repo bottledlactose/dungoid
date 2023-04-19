@@ -36,7 +36,7 @@ module.exports = {
 
       const embed = embedModule.error(client)
         .setTitle('Maximum characters reached!')
-        .setDescription(`You may have up to ${config.maxCharacters} characters. You can delete some characters using **/delete**.`);
+        .setDescription(`You may have up to ${config.maxCharacters} characters. You can view your characters with \`/list\` and delete some using \`/delete\`.`);
 
       await interaction.reply({ embeds: [embed], ephemeral: true });
       return;

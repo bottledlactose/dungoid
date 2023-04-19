@@ -7,9 +7,9 @@ module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('invite')
 		.setDescription('Sends an invite link to add me to your own server!'),
-	async execute(interaction, client) {
+	async execute(interaction, client, config) {
 
-    const url = `https://discord.com/api/oauth2/authorize?client_id=${clientId}&permissions=536870912&scope=bot%20applications.commands`;
+    const url = `https://discord.com/api/oauth2/authorize?client_id=${clientId}&permissions=${config.permissions}&scope=${config.scope}`;
 
     const embed = embedModule.info(client)
       .setTitle('Here\'s your invite!')

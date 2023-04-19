@@ -9,7 +9,7 @@ module.exports = {
     .addStringOption(option =>
       option
         .setName('prefix')
-        .setDescription('What is the chat prefix for your character?')
+        .setDescription('What is the identifier prefix for your character?')
         .setRequired(true)
         .setMaxLength(6)),
 	async execute(interaction, client) {
@@ -26,8 +26,8 @@ module.exports = {
         await characterModule.set(interaction.user, characters);
 
         const embed = embedModule.success(client)
-          .setTitle('Done!')
-          .setDescription(`**${character.name}** has been successfully deleted!`);
+          .setTitle('Character deleted!')
+          .setDescription(`**${character.name}** has been successfully deleted.`);
 
         await interaction.reply({ embeds: [embed], ephemeral: true });
         return;

@@ -1,4 +1,13 @@
 {
 	"token": "<YOUR TOKEN HERE>",
-  "clientId": "<YOUR CLIENT ID HERE>"
+  "clientId": "<YOUR CLIENT ID HERE>",
+  "commands": {
+    "create": {
+      "maxCharacters": 20
+    },
+    "invite": {
+      "permissions": 536870912,
+      "scope": "bot%20applications.commands"
+    }
+  }
 }

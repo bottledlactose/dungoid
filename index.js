@@ -1,7 +1,7 @@
 const fs = require('node:fs');
 const path = require('node:path');
 const { Client, Collection, Events, GatewayIntentBits } = require('discord.js');
-const { token } = require('./config.json');
+const config = require('./config.json');
 
 const client = new Client({ intents: [GatewayIntentBits.Guilds] });
 client.commands = new Collection();
@@ -34,8 +34,10 @@ client.on(Events.InteractionCreate, async interaction => {
 		return;
 	}
 
+  const commandConfig = config.commands[interaction.commandName];
+
 	try {
-		await command.execute(interaction, client);
+		await command.execute(interaction, client, commandConfig);
 	} catch (error) {
 		console.error(error);
 		if (interaction.replied || interaction.deferred) {
@@ -46,4 +48,4 @@ client.on(Events.InteractionCreate, async interaction => {
 	}
 });
 
-client.login(token);
+client.login(config.token);

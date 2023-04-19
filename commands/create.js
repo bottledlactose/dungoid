@@ -5,7 +5,7 @@ const characterModule = require('../modules/character');
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('create')
-		.setDescription('Create a new character to speak as')
+		.setDescription('Create a new character')
     .addStringOption(option =>
       option
         .setName('name')
@@ -24,18 +24,18 @@ module.exports = {
           .setName('avatar')
           .setDescription('What does your character look like?')
           .setRequired(true)),
-	async execute(interaction, client) {
+	async execute(interaction, client, config) {
     const name = interaction.options.getString('name');
     const prefix = interaction.options.getString('prefix');
     const avatar = interaction.options.getAttachment('avatar');
 
     let characters = await characterModule.get(interaction.user);
 
-    if (characters.length + 1 >= 20) {
+    if (characters.length + 1 >= config.maxCharacters) {
 
       const embed = embedModule.error(client)
-        .setTitle('Whoops!')
-        .setDescription(`You may have up to 20 characters. You may delete characters using \`/delete\``);
+        .setTitle('Maximum characters reached!')
+        .setDescription(`You may have up to 20 characters. You can delete characters using \`/delete\``);
 
       await interaction.reply({ embeds: [embed], ephemeral: true });
       return;
@@ -44,8 +44,8 @@ module.exports = {
     if (!avatar.contentType.startsWith('image/')) {
 
       const embed = embedModule.error(client)
-        .setTitle('Whoops!')
-        .setDescription(`The uploaded attachment must be an image!`);
+        .setTitle('Please attach an image!')
+        .setDescription(`The uploaded avatar attachment must be an image`);
 
       await interaction.reply({ embeds: [embed], ephemeral: true });
       return;
@@ -54,8 +54,8 @@ module.exports = {
     for (const c of characters) {
       if (c.prefix === prefix) {
         const embed = embedModule.error(client)
-          .setTitle('Whoops!')
-          .setDescription(`The prefix \`${prefix}\` is already in use by another character!`);
+          .setTitle('Prefix already in use!')
+          .setDescription(`The prefix \`${prefix}\` is already in use by another character`);
 
         await interaction.reply({ embeds: [embed], ephemeral: true });
         return;
@@ -69,8 +69,8 @@ module.exports = {
     }]);
 
     const embed = embedModule.success(client)
-      .setTitle('Done!')
-      .setDescription('You can now use your character by using \`/say\`');
+      .setTitle('Character created!')
+      .setDescription('You can now use your character by using \`/say\` or view all yours characters using \`/list\`');
 
     await interaction.reply({ embeds: [embed], ephemeral: true });
 	},

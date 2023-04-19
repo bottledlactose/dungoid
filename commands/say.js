@@ -5,17 +5,17 @@ const characterModule = require('../modules/character');
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('say')
-		.setDescription('Says your message as one of your characters')
+		.setDescription('Say your message as one of your characters')
     .addStringOption(option =>
         option
           .setName('prefix')
-          .setDescription('The target prefix')
+          .setDescription('What is the identifier prefix for your character?')
           .setRequired(true)
           .setMaxLength(6))
     .addStringOption(option =>
       option
         .setName('message')
-        .setDescription('The message to be sent')
+        .setDescription('What do you want your character to say?')
         .setRequired(true)),
 	async execute(interaction, client) {
     const prefix = interaction.options.getString('prefix');

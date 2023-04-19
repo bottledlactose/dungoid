@@ -1,4 +1,4 @@
-const { SlashCommandBuilder } = require('discord.js');
+const { SlashCommandBuilder, PermissionsBitField } = require('discord.js');
 const embedModule = require('../modules/embed');
 const characterModule = require('../modules/character');
 
@@ -36,6 +36,17 @@ module.exports = {
         .setDescription(`You don't have a character with prefix \`${prefix}\`!`);
 
       await interaction.reply({ embeds: [embed], ephemeral: true });
+      return;
+    }
+
+    if (!interaction.guild.members.me.permissions.has(PermissionsBitField.Flags.ManageWebhooks)) {
+
+      const embed = embedModule.error(client)
+        .setTitle('Missing permissions!')
+        .setDescription(`I don't have permissions to \`Manage Webhooks\`! `
+          + `Please ask your server administrator to enable them.`);
+
+      await interaction.reply({ embeds: [embed] });
       return;
     }
 

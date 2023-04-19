@@ -16,7 +16,7 @@ module.exports = {
     const sides = interaction.options.getInteger('sides');
     const result = Math.floor(Math.random() * sides) + 1;
 
-    const embed = embedModule.success(client)
+    const embed = embedModule.info(client)
       .setDescription(`You rolled **${result}** out of **${sides}**!`);
 
 		await interaction.reply({ embeds: [embed] });

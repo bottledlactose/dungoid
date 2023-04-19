@@ -5,7 +5,7 @@ const embedModule = require('../modules/embed');
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('create')
-		.setDescription('Create a new character')
+		.setDescription('Create a new alias or character')
     .addStringOption(option =>
       option
         .setName('name')
@@ -36,7 +36,7 @@ module.exports = {
 
       const embed = embedModule.error(client)
         .setTitle('Maximum characters reached!')
-        .setDescription(`You may have up to 20 characters. You can delete characters using \`/delete\``);
+        .setDescription('You may have up to 20 characters. You can delete some characters using **/delete**.');
 
       await interaction.reply({ embeds: [embed], ephemeral: true });
       return;
@@ -46,8 +46,8 @@ module.exports = {
     if (!avatar.contentType.startsWith('image/')) {
 
       const embed = embedModule.error(client)
-        .setTitle('Please attach an image!')
-        .setDescription(`The uploaded avatar attachment must be an image`);
+        .setTitle('Invalid avatar!')
+        .setDescription(`The uploaded avatar attachment must be an image.`);
 
       await interaction.reply({ embeds: [embed], ephemeral: true });
       return;
@@ -58,7 +58,7 @@ module.exports = {
       if (c.prefix === prefix) {
         const embed = embedModule.error(client)
           .setTitle('Prefix already in use!')
-          .setDescription(`The prefix \`${prefix}\` is already in use by another character`);
+          .setDescription(`The prefix \`${prefix}\` is already in use by another character.`);
 
         await interaction.reply({ embeds: [embed], ephemeral: true });
         return;
@@ -74,7 +74,7 @@ module.exports = {
 
     const embed = embedModule.success(client)
       .setTitle('Character created!')
-      .setDescription('You can now use your character by using \`/say\` or view all yours characters using \`/list\`');
+      .setDescription('You can now use your character by using \`/say\` or view all yours characters using \`/list\`.');
 
     await interaction.reply({ embeds: [embed], ephemeral: true });
 	},

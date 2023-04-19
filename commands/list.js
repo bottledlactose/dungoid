@@ -5,7 +5,7 @@ const embedModule = require('../modules/embed');
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('list')
-		.setDescription('Lists all of your currenct characters'),
+		.setDescription('List all your aliases or characters'),
 	async execute(interaction, client) {
     const characters = await characterModule.get(interaction.user);
     const embed = embedModule.info(client);

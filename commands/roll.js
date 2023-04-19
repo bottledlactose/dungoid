@@ -4,7 +4,7 @@ const embedModule = require('../modules/embed');
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('roll')
-		.setDescription('Rolls a dice with the given amount of sides')
+		.setDescription('Roll a dice with the given amount of sides')
     .addIntegerOption(option =>
         option
           .setName('sides')
@@ -18,7 +18,7 @@ module.exports = {
     const result = Math.floor(Math.random() * sides) + 1;
 
     const embed = embedModule.info(client)
-      .setDescription(`You rolled **${result}** out of **${sides}**!`);
+      .setDescription(`You rolled \`${result}\` out of \`${sides}\`!`);
 
 		await interaction.reply({ embeds: [embed] });
 	},

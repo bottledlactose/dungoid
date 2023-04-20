@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://raw.githubusercontent.com/bottledlactose/dungoid/trunk/assets/avatar.png?token=GHSAT0AAAAAACA5YYHQIQ6GIHTPRCQ2BM7AZCBEHOA" alt="icon" />
+  <img src="https://raw.githubusercontent.com/bottledlactose/dungoid/trunk/assets/avatar.png?token=GHSAT0AAAAAACA5YYHRRS2JQXT4V77N5ONUZCBEI6A" alt="icon" />
 </p>
 
 # Dungoid

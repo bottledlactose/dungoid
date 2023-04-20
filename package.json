@@ -1,7 +1,7 @@
 {
   "name": "dungoid",
   "version": "1.0.0",
-  "description": "A general-purpose roleplaying Discord bot.",
+  "description": "A general-purpose roleplaying bot for Discord",
   "main": "index.js",
   "scripts": {
     "deploy": "node ./scripts/deploy.js",

@@ -69,11 +69,8 @@ module.exports = {
       content: message,
     });
 
-    const embed = embedModule.success(client)
-      .setTitle('Done!');
-
     // There's no way to not send a reply to an interaction...
-    const reply = await interaction.reply({ embeds: [embed], ephemeral: true });
+    const reply = await interaction.reply('** **');
     setTimeout(() => reply.delete(), 1);
 	},
 };

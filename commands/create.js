@@ -74,7 +74,7 @@ module.exports = {
 
     const embed = embedModule.success(client)
       .setTitle('Character created!')
-      .setDescription('You can now use your character by using \`/say\` or view all yours characters using \`/list\`.');
+      .setDescription('You can now use your character by using \`/say\` or view all your characters using \`/list\`.');
 
     await interaction.reply({ embeds: [embed], ephemeral: true });
 	},

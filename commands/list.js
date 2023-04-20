@@ -35,7 +35,7 @@ module.exports = {
         // Add a new field entry for the current character
         embed.addFields({
           name: characters[i].name,
-          value: `prefix: \`${characters[i].prefix}\``
+          value: `tag: \`${characters[i].tag}\``
             + ` · [avatar](${characters[i].avatarURL})`,
         });
       }

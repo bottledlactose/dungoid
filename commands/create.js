@@ -15,8 +15,8 @@ module.exports = {
         .setMaxLength(32))
     .addStringOption(option =>
       option
-        .setName('prefix')
-        .setDescription('What is the identifier prefix for your character?')
+        .setName('tag')
+        .setDescription('What is the unique tag for your character?')
         .setRequired(true)
         .setMaxLength(6))
     .addAttachmentOption(option =>
@@ -26,7 +26,7 @@ module.exports = {
           .setRequired(true)),
 	async execute(interaction, client, config) {
     const name = interaction.options.getString('name');
-    const prefix = interaction.options.getString('prefix');
+    const tag = interaction.options.getString('tag');
     const avatar = interaction.options.getAttachment('avatar');
 
     let characters = await characterModule.get(interaction.user);
@@ -53,12 +53,12 @@ module.exports = {
       return;
     }
 
-    // Let's check if the provided prefix isn't in use yet
+    // Let's check if the provided tag isn't in use yet
     for (const c of characters) {
-      if (c.prefix === prefix) {
+      if (c.tag === tag) {
         const embed = embedModule.error(client)
-          .setTitle('Prefix already in use!')
-          .setDescription(`The prefix \`${prefix}\` is already in use by another character.`);
+          .setTitle('tag already in use!')
+          .setDescription(`The tag \`${tag}\` is already in use by another character.`);
 
         await interaction.reply({ embeds: [embed], ephemeral: true });
         return;
@@ -68,7 +68,7 @@ module.exports = {
     // Add the newly created character to the user's character dataset
     await characterModule.set(interaction.user, [...characters, {
       name: name,
-      prefix: prefix,
+      tag: tag,
       avatarURL: avatar.url,
     }]);
 

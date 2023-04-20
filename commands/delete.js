@@ -8,17 +8,17 @@ module.exports = {
 		.setDescription('Delete an alias or character')
     .addStringOption(option =>
       option
-        .setName('prefix')
-        .setDescription('What is the identifier prefix for your character?')
+        .setName('tag')
+        .setDescription('What is the unique tag for your character?')
         .setRequired(true)
         .setMaxLength(6)),
 	async execute(interaction, client) {
-    const prefix = interaction.options.getString('prefix');
+    const tag = interaction.options.getString('tag');
     // Fetch all characters from the user's dataset
     let characters = await characterModule.get(interaction.user);
 
     for (const i in characters) {
-      if (characters[i].prefix === prefix) {
+      if (characters[i].tag === tag) {
         // Temporarily store the character for display after deletion
         const character = characters[i];
         // Delete the character from the dataset and overwrite the remaining value
@@ -36,7 +36,7 @@ module.exports = {
 
     const embed = embedModule.error(client)
       .setTitle('Failed to delete character!')
-      .setDescription(`You don't have any character with the prefix \`${prefix}\`! `
+      .setDescription(`You don't have any character with the tag \`${tag}\`! `
         + `You can view your characters with \`/list\`.`);
 
     await interaction.reply({ embeds: [embed], ephemeral: true });

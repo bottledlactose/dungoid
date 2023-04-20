@@ -27,6 +27,7 @@ The repository comes with some build-in scripts to make things easier. These scr
 
 The project structure of Dungoid is fairly simple:
 
+- `assets` - Contains static assets for various purposes, e.g. display in the README file
 - `commands` - Contains all command-specific files, e.g. `/invite` has a file called `invite.js`
 - `modules` - Contains small modules of re-usable code, e.g. `embed.js` is named `embedModule` in-code
 - `scripts` - Contains scripts that automate some tasks, e.g. `deploy.js` which is called by `npm run deploy` to update application commands

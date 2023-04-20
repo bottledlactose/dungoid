@@ -37,3 +37,8 @@ The project structure of Dungoid is fairly simple:
 - `scripts` - Contains scripts that automate some tasks, e.g. `deploy.js` which is called by `npm run deploy` to update application commands
 
 You will notice there is both a `index.js` and `bot.js` file. This is because Dungoid uses interal sharding to future-proof itself for more users. `bot.js` contains the actual bot while `index.js` contains the sharding management.
+
+## Links
+
+- [top.gg](https://top.gg/bot/1097514094434713711)
+- [Discord invite](https://discord.com/oauth2/authorize?client_id=1097514094434713711&permissions=536870912&scope=bot%20applications.commands)

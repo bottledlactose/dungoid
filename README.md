@@ -15,3 +15,20 @@ You should then fill in the `token` and `clientId` properties specific to the ap
 ### Development
 
 To set up the bot from your local working environment you can use the `npm run dev` command to start up Nodemon, a tool that automatically reloads your program on code changes.
+
+### Scripts
+
+The repository comes with some build-in scripts to make things easier. These scripts can be run from NPM:
+
+- `npm run dev` - Starts up Nodemon, enabling automatic application reloads on file save
+- `npm run deploy` - Deploys all commands in `commands` to all guilds the application is in
+
+## Project Structure
+
+The project structure of Dungoid is fairly simple:
+
+- `commands` - Contains all command-specific files, e.g. `/invite` has a file called `invite.js`
+- `modules` - Contains small modules of re-usable code, e.g. `embed.js` is named `embedModule` in-code
+- `scripts` - Contains scripts that automate some tasks, e.g. `deploy.js` which is called by `npm run deploy` to update application commands
+
+You will notice there is both a `index.js` and `bot.js` file. This is because Dungoid uses interal sharding to future-proof itself for more users. `bot.js` contains the actual bot while `index.js` contains the sharding management.

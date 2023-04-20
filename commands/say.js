@@ -8,8 +8,8 @@ module.exports = {
 		.setDescription('Say your message as one of your characters')
     .addStringOption(option =>
         option
-          .setName('prefix')
-          .setDescription('What is the identifier prefix for your character?')
+          .setName('tag')
+          .setDescription('What is the unique tag for your character?')
           .setRequired(true)
           .setMaxLength(6))
     .addStringOption(option =>
@@ -18,14 +18,14 @@ module.exports = {
         .setDescription('What do you want your character to say?')
         .setRequired(true)),
 	async execute(interaction, client) {
-    const prefix = interaction.options.getString('prefix');
+    const tag = interaction.options.getString('tag');
     const message = interaction.options.getString('message');
 
     const characters = await characterModule.get(interaction.user);
     let character = null;
 
     for (const c of characters) {
-      if (c.prefix === prefix) {
+      if (c.tag === tag) {
         character = c;
         break;
       }
@@ -33,7 +33,7 @@ module.exports = {
 
     if (!character) {
       const embed = embedModule.error(client)
-        .setDescription(`You don't have a character with prefix \`${prefix}\`!`);
+        .setDescription(`You don't have a character with tag \`${tag}\`!`);
 
       await interaction.reply({ embeds: [embed], ephemeral: true });
       return;

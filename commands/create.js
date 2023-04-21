@@ -9,25 +9,25 @@ module.exports = {
 		.setDescription('Create a new alias or character')
     .addStringOption(option =>
       option
+        .setName('tag')
+        .setDescription('What is the unique tag for your character?')
+        .setRequired(true)
+        .setMaxLength(6))
+    .addStringOption(option =>
+      option
         .setName('name')
         .setDescription('What is the display name of your character?')
         .setRequired(true)
         .setMinLength(2)
         .setMaxLength(32))
-    .addStringOption(option =>
-      option
-        .setName('tag')
-        .setDescription('What is the unique tag for your character?')
-        .setRequired(true)
-        .setMaxLength(6))
     .addAttachmentOption(option =>
         option
           .setName('avatar')
           .setDescription('What does your character look like?')
           .setRequired(true)),
 	async execute(interaction, client) {
-    const name = interaction.options.getString('name');
     const tag = interaction.options.getString('tag');
+    const name = interaction.options.getString('name');
     const avatar = interaction.options.getAttachment('avatar');
 
     let characters = await charactersData.get(interaction.user);

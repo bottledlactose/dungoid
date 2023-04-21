@@ -1,6 +1,7 @@
 const { SlashCommandBuilder } = require('discord.js');
 const { charactersData } = require('../modules/data');
 const { infoEmbed } = require('../modules/embed');
+const { maxCharacters } = require('../config.json');
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -12,12 +13,11 @@ module.exports = {
 
     if (characters.length == 0) {
       // Set up a fallback message since no characters were found
-      embed.setDescription('You have no characters yet! '
-        + 'Start by creating one using \`/create\`');
+      embed.setDescription('You have no characters yet! Start by creating one using \`/create\`');
     } else {
       embed
         .setTitle('Characters')
-        .setDescription(`You have a total of **${characters.length}** characters! `
+        .setDescription(`You have a total of **${characters.length}** out of **${maxCharacters}** characters! `
           + `You can create new characters using \`/create\` and delete them using \`/delete\`.`);
 
       // Sort all characters by display name

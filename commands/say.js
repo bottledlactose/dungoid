@@ -1,6 +1,6 @@
-const { SlashCommandBuilder, PermissionsBitField } = require('discord.js');
+const { SlashCommandBuilder, PermissionsBitField, EmbedBuilder, ButtonBuilder, ButtonStyle, ActionRowBuilder } = require('discord.js');
 const { charactersData, logData } = require('../modules/data');
-const { errorEmbed, infoEmbed } = require('../modules/embed');
+const { errorEmbed } = require('../modules/embed');
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -63,7 +63,7 @@ module.exports = {
       webhook = webhooks.first();
     }
 
-    await webhook.send({
+    const webhookMessage = await webhook.send({
       avatarURL: character.avatarURL,
       username: character.name,
       content: message,
@@ -74,11 +74,23 @@ module.exports = {
     if (channelId && interaction.guild.channels.cache.has(channelId)) {
       const channel = interaction.guild.channels.cache.get(channelId);
 
-      const embed = infoEmbed(client)
+      const embed = new EmbedBuilder()
         .setAuthor({ name: character.name, iconURL: character.avatarURL })
         .setDescription(message);
 
-      channel.send({ content: `New message sent by ${interaction.user} through **${client.user.username}**:`, embeds: [embed] });
+      const button = new ButtonBuilder()
+        .setLabel('Jump')
+        .setURL(webhookMessage.url)
+        .setStyle(ButtonStyle.Link);
+
+      const row = new ActionRowBuilder()
+        .addComponents(button);
+
+      channel.send({
+        content: `New message sent by ${interaction.user}:`,
+        embeds: [embed],
+        components: [row]
+      });
     }
 
     // There's no way to not send a reply to an interaction...

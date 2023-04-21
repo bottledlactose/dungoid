@@ -11,7 +11,7 @@ module.exports = {
       .setTitle(`About ${client.user.username}`)
       .setDescription(`**${client.user.username}** is a simple application to enhance your `
         + `role-playing experience through the use of a **full alias/character system** and`
-        + `an advanced dice system.`
+        + `an **advanced dice system**.`
         + `\n\nHere are some commands to get you started:`)
       .addFields([
         { name: '\`/create\`', value: 'Create a new character' },

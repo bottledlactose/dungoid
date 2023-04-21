@@ -32,8 +32,6 @@ module.exports = {
     const embed = infoEmbed(client);
     const modifierDisplay = modifier > -1 ? '+' + modifier : modifier;
 
-    console.log(modifierDisplay);
-
     if (amount > 1) {
       embed.setDescription('You rolled the following results:');
 

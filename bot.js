@@ -30,7 +30,7 @@ client.once(Events.ClientReady, c => {
   // Set up the bot user's custom status
   client.user.setPresence({
     activities: [
-      { name: `/create /list /roll`, type: ActivityType.Listening }
+      { name: `/help /create /roll`, type: ActivityType.Listening }
     ]
   });
 });

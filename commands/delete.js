@@ -36,7 +36,7 @@ module.exports = {
 
     const embed = errorEmbed(client)
       .setTitle('Failed to delete character!')
-      .setDescription(`You don't have any character with the tag \`${tag}\`! `
+      .setDescription(`You don't have any characters with the tag \`${tag}\`! `
         + `You can view your characters with \`/list\`.`);
 
     await interaction.reply({ embeds: [embed], ephemeral: true });

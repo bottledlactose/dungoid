@@ -69,12 +69,16 @@ module.exports = {
       content: message,
     });
 
-    const logChannelId = await logData.get(interaction.guild);
+    const channelId = await logData.get(interaction.guild);
 
-    if (logChannelId) {
-      const channel = interaction.guild.channels.cache.get(logChannelId);
-      // TODO: Ensure the channel exists first of all
-      channel.send('message log lol');
+    if (channelId && interaction.guild.channels.cache.has(channelId)) {
+      const channel = interaction.guild.channels.cache.get(channelId);
+
+      const embed = embedModule.info(client)
+        .setAuthor({ name: character.name, iconURL: character.avatarURL })
+        .setDescription(message);
+
+      channel.send({ content: `New message sent by ${interaction.user} through **${client.user.username}**:`, embeds: [embed] });
     }
 
     // There's no way to not send a reply to an interaction...

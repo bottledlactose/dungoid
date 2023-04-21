@@ -1,5 +1,5 @@
 const { SlashCommandBuilder } = require('discord.js');
-const embedModule = require('../modules/embed');
+const { infoEmbed } = require('../modules/embed');
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -17,7 +17,7 @@ module.exports = {
     // Generate a random number based on the amount of sides to use
     const result = Math.floor(Math.random() * sides) + 1;
 
-    const embed = embedModule.info(client)
+    const embed = infoEmbed(client)
       .setDescription(`You rolled \`${result}\` out of \`${sides}\`!`);
 
 		await interaction.reply({ embeds: [embed] });

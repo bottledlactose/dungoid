@@ -1,6 +1,6 @@
 const { SlashCommandBuilder } = require('discord.js');
 const { charactersData } = require('../modules/data');
-const embedModule = require('../modules/embed');
+const { infoEmbed } = require('../modules/embed');
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -8,7 +8,7 @@ module.exports = {
 		.setDescription('List all your aliases or characters'),
 	async execute(interaction, client) {
     const characters = await charactersData.get(interaction.user);
-    const embed = embedModule.info(client);
+    const embed = infoEmbed(client);
 
     if (characters.length == 0) {
       // Set up a fallback message since no characters were found

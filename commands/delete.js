@@ -1,5 +1,5 @@
 const { SlashCommandBuilder } = require('discord.js');
-const characterModule = require('../modules/character');
+const { charactersData } = require('../modules/data');
 const embedModule = require('../modules/embed');
 
 module.exports = {
@@ -15,7 +15,7 @@ module.exports = {
 	async execute(interaction, client) {
     const tag = interaction.options.getString('tag');
     // Fetch all characters from the user's dataset
-    let characters = await characterModule.get(interaction.user);
+    let characters = await charactersData.get(interaction.user);
 
     for (const i in characters) {
       if (characters[i].tag === tag) {
@@ -23,7 +23,7 @@ module.exports = {
         const character = characters[i];
         // Delete the character from the dataset and overwrite the remaining value
         characters.splice(i, 1);
-        await characterModule.set(interaction.user, characters);
+        await charactersData.set(interaction.user, characters);
 
         const embed = embedModule.success(client)
           .setTitle('Character deleted!')

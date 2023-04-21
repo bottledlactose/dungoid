@@ -1,5 +1,5 @@
 const { SlashCommandBuilder, PermissionsBitField } = require('discord.js');
-const characterModule = require('../modules/character');
+const { charactersData } = require('../modules/data');
 const embedModule = require('../modules/embed');
 
 module.exports = {
@@ -21,7 +21,7 @@ module.exports = {
     const tag = interaction.options.getString('tag');
     const message = interaction.options.getString('message');
 
-    const characters = await characterModule.get(interaction.user);
+    const characters = await charactersData.get(interaction.user);
     let character = null;
 
     for (const c of characters) {

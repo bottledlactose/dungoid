@@ -5,11 +5,11 @@ const { successEmbed } = require('../modules/embed');
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('log')
-		.setDescription('Sets a log channel for moderators')
+		.setDescription('Set up a message log channel for moderators')
     .setDefaultMemberPermissions(PermissionsBitField.Flags.Administrator)
     .addChannelOption(option =>
       option.setName('channel')
-        .setDescription('The channel to log moderation messages to')
+        .setDescription('To which channel would you like to log messages?')
         .setRequired(true)),
 	async execute(interaction, client) {
     const channel = interaction.options.getChannel('channel');

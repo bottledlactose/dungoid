@@ -46,12 +46,9 @@ client.on(Events.InteractionCreate, async interaction => {
 		return;
 	}
 
-  // Fetch the configuration that is specific to this command
-  const commandConfig = config.commands[interaction.commandName];
-
 	try {
     // Run the command and hope we don't get an error...
-		await command.execute(interaction, client, commandConfig);
+		await command.execute(interaction, client);
 	} catch (error) {
 		console.error(error);
 		if (interaction.replied || interaction.deferred) {

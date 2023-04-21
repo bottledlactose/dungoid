@@ -94,7 +94,7 @@ module.exports = {
     }
 
     // There's no way to not send a reply to an interaction...
-    const reply = await interaction.reply('** **');
+    const reply = await interaction.reply({ content: '** **', ephemeral: true });
     setTimeout(() => reply.delete(), 1);
 	},
 };

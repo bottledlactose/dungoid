@@ -1,6 +1,7 @@
 const { SlashCommandBuilder } = require('discord.js');
 const { charactersData } = require('../modules/data');
 const { errorEmbed, successEmbed } = require('../modules/embed');
+const { maxCharacters } = require('../config.json');
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -24,7 +25,7 @@ module.exports = {
           .setName('avatar')
           .setDescription('What does your character look like?')
           .setRequired(true)),
-	async execute(interaction, client, config) {
+	async execute(interaction, client) {
     const name = interaction.options.getString('name');
     const tag = interaction.options.getString('tag');
     const avatar = interaction.options.getAttachment('avatar');
@@ -32,11 +33,11 @@ module.exports = {
     let characters = await charactersData.get(interaction.user);
 
     // Make sure the user doesn't exceed the maximum amount of configured character
-    if (characters.length + 1 >= config.maxCharacters) {
+    if (characters.length + 1 >= maxCharacters) {
 
       const embed = errorEmbed(client)
         .setTitle('Maximum characters reached!')
-        .setDescription(`You may have up to ${config.maxCharacters} characters. You can view your characters with \`/list\` and delete some using \`/delete\`.`);
+        .setDescription(`You may have up to ${maxCharacters} characters. You can view your characters with \`/list\` and delete some using \`/delete\`.`);
 
       await interaction.reply({ embeds: [embed], ephemeral: true });
       return;

@@ -1,5 +1,5 @@
 const { SlashCommandBuilder, PermissionsBitField } = require('discord.js');
-const { charactersData } = require('../modules/data');
+const { charactersData, logData } = require('../modules/data');
 const embedModule = require('../modules/embed');
 
 module.exports = {
@@ -68,6 +68,14 @@ module.exports = {
       username: character.name,
       content: message,
     });
+
+    const logChannelId = await logData.get(interaction.guild);
+
+    if (logChannelId) {
+      const channel = interaction.guild.channels.cache.get(logChannelId);
+      // TODO: Ensure the channel exists first of all
+      channel.send('message log lol');
+    }
 
     // There's no way to not send a reply to an interaction...
     const reply = await interaction.reply('** **');

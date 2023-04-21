@@ -7,7 +7,7 @@ const charactersData = {
 };
 
 const logData = {
-  get: async guild => await db.get(`log_${guild.id}`) || [],
+  get: async guild => await db.get(`log_${guild.id}`) || null,
   set: async (guild, channel) => await db.set(`log_${guild.id}`, channel.id),
 };
 

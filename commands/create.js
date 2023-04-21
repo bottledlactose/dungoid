@@ -1,5 +1,5 @@
 const { SlashCommandBuilder } = require('discord.js');
-const characterModule = require('../modules/character');
+const { charactersData } = require('../modules/data');
 const embedModule = require('../modules/embed');
 
 module.exports = {
@@ -29,7 +29,7 @@ module.exports = {
     const tag = interaction.options.getString('tag');
     const avatar = interaction.options.getAttachment('avatar');
 
-    let characters = await characterModule.get(interaction.user);
+    let characters = await charactersData.get(interaction.user);
 
     // Make sure the user doesn't exceed the maximum amount of configured character
     if (characters.length + 1 >= config.maxCharacters) {
@@ -57,7 +57,7 @@ module.exports = {
     for (const c of characters) {
       if (c.tag === tag) {
         const embed = embedModule.error(client)
-          .setTitle('tag already in use!')
+          .setTitle('Tag already in use!')
           .setDescription(`The tag \`${tag}\` is already in use by another character.`);
 
         await interaction.reply({ embeds: [embed], ephemeral: true });
@@ -66,7 +66,7 @@ module.exports = {
     }
 
     // Add the newly created character to the user's character dataset
-    await characterModule.set(interaction.user, [...characters, {
+    await charactersData.set(interaction.user, [...characters, {
       name: name,
       tag: tag,
       avatarURL: avatar.url,

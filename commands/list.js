@@ -1,5 +1,5 @@
 const { SlashCommandBuilder } = require('discord.js');
-const characterModule = require('../modules/character');
+const { charactersData } = require('../modules/data');
 const embedModule = require('../modules/embed');
 
 module.exports = {
@@ -7,7 +7,7 @@ module.exports = {
 		.setName('list')
 		.setDescription('List all your aliases or characters'),
 	async execute(interaction, client) {
-    const characters = await characterModule.get(interaction.user);
+    const characters = await charactersData.get(interaction.user);
     const embed = embedModule.info(client);
 
     if (characters.length == 0) {

@@ -1,6 +1,6 @@
 const { SlashCommandBuilder, PermissionsBitField } = require('discord.js');
 const { logData } = require('../modules/data');
-const embedModule = require('../modules/embed');
+const { successEmbed } = require('../modules/embed');
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -15,7 +15,7 @@ module.exports = {
     const channel = interaction.options.getChannel('channel');
     await logData.set(interaction.guild, channel);
 
-    const embed = embedModule.success(client)
+    const embed = successEmbed(client)
       .setTitle('Log channel set!')
       .setDescription(`New moderation messages will now be logged to <#${channel.id}>!`);
 

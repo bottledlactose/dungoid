@@ -1,6 +1,6 @@
 const { SlashCommandBuilder } = require('discord.js');
 const { charactersData } = require('../modules/data');
-const embedModule = require('../modules/embed');
+const { errorEmbed, successEmbed } = require('../modules/embed');
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -25,7 +25,7 @@ module.exports = {
         characters.splice(i, 1);
         await charactersData.set(interaction.user, characters);
 
-        const embed = embedModule.success(client)
+        const embed = successEmbed(client)
           .setTitle('Character deleted!')
           .setDescription(`**${character.name}** has been successfully deleted.`);
 
@@ -34,7 +34,7 @@ module.exports = {
       }
     }
 
-    const embed = embedModule.error(client)
+    const embed = errorEmbed(client)
       .setTitle('Failed to delete character!')
       .setDescription(`You don't have any character with the tag \`${tag}\`! `
         + `You can view your characters with \`/list\`.`);

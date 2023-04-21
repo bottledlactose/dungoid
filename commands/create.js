@@ -1,6 +1,6 @@
 const { SlashCommandBuilder } = require('discord.js');
 const { charactersData } = require('../modules/data');
-const embedModule = require('../modules/embed');
+const { errorEmbed, successEmbed } = require('../modules/embed');
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -34,7 +34,7 @@ module.exports = {
     // Make sure the user doesn't exceed the maximum amount of configured character
     if (characters.length + 1 >= config.maxCharacters) {
 
-      const embed = embedModule.error(client)
+      const embed = errorEmbed(client)
         .setTitle('Maximum characters reached!')
         .setDescription(`You may have up to ${config.maxCharacters} characters. You can view your characters with \`/list\` and delete some using \`/delete\`.`);
 
@@ -45,7 +45,7 @@ module.exports = {
     // Make sure the user is actually uploading an image
     if (!avatar.contentType.startsWith('image/')) {
 
-      const embed = embedModule.error(client)
+      const embed = errorEmbed(client)
         .setTitle('Invalid avatar!')
         .setDescription(`The uploaded avatar attachment must be an image.`);
 
@@ -56,7 +56,7 @@ module.exports = {
     // Let's check if the provided tag isn't in use yet
     for (const c of characters) {
       if (c.tag === tag) {
-        const embed = embedModule.error(client)
+        const embed = errorEmbed(client)
           .setTitle('Tag already in use!')
           .setDescription(`The tag \`${tag}\` is already in use by another character.`);
 
@@ -72,7 +72,7 @@ module.exports = {
       avatarURL: avatar.url,
     }]);
 
-    const embed = embedModule.success(client)
+    const embed = successEmbed(client)
       .setTitle('Character created!')
       .setDescription('You can now use your character by using \`/say\` or view all your characters using \`/list\`.')
       .setImage(avatar.url);

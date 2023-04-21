@@ -1,6 +1,6 @@
 const { SlashCommandBuilder } = require('discord.js');
 const { clientId } = require('../config.json');
-const embedModule = require('../modules/embed');
+const { infoEmbed } = require('../modules/embed');
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -10,7 +10,7 @@ module.exports = {
 
     const url = `https://discord.com/api/oauth2/authorize?client_id=${clientId}&permissions=${config.permissions}&scope=${config.scope}`;
 
-    const embed = embedModule.info(client)
+    const embed = infoEmbed(client)
       .setTitle('Here\'s your invite!')
       .setDescription(`Thank you for inviting me to your server! Please [click here](${url}) to complete the process. Don't see your server in the list? Ask a server administrator to invite me instead.`);
 

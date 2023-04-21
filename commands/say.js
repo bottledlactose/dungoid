@@ -1,6 +1,6 @@
 const { SlashCommandBuilder, PermissionsBitField } = require('discord.js');
 const { charactersData, logData } = require('../modules/data');
-const embedModule = require('../modules/embed');
+const { errorEmbed, infoEmbed } = require('../modules/embed');
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -32,7 +32,7 @@ module.exports = {
     }
 
     if (!character) {
-      const embed = embedModule.error(client)
+      const embed = errorEmbed(client)
         .setDescription(`You don't have a character with tag \`${tag}\`!`);
 
       await interaction.reply({ embeds: [embed], ephemeral: true });
@@ -41,7 +41,7 @@ module.exports = {
 
     if (!interaction.guild.members.me.permissions.has(PermissionsBitField.Flags.ManageWebhooks)) {
 
-      const embed = embedModule.error(client)
+      const embed = errorEmbed(client)
         .setTitle('Missing permissions!')
         .setDescription(`I don't have permissions to \`Manage Webhooks\`! `
           + `Please ask your server administrator to enable them.`);
@@ -74,7 +74,7 @@ module.exports = {
     if (channelId && interaction.guild.channels.cache.has(channelId)) {
       const channel = interaction.guild.channels.cache.get(channelId);
 
-      const embed = embedModule.info(client)
+      const embed = infoEmbed(client)
         .setAuthor({ name: character.name, iconURL: character.avatarURL })
         .setDescription(message);
 

@@ -8,7 +8,7 @@ const colors = {
 };
 
 // Provide a convenient base for the actual embed types to build off of
-const base = client => {
+const baseEmbed = client => {
   return new EmbedBuilder()
     .setFooter({
       text: `Posted by ${client.user.username}`,
@@ -18,8 +18,10 @@ const base = client => {
 };
 
 // Define some shorthand embed type builders with their respective color
-const error = client => base(client).setColor(colors.error);
-const success = client => base(client).setColor(colors.success);
-const info = client => base(client).setColor(colors.info);
+const errorEmbed = client => baseEmbed(client).setColor(colors.error);
+const successEmbed = client => baseEmbed(client).setColor(colors.success);
+const infoEmbed = client => baseEmbed(client).setColor(colors.info);
 
-module.exports = { error: error, success: success, info: info };
+module.exports.errorEmbed = errorEmbed;
+module.exports.successEmbed = successEmbed;
+module.exports.infoEmbed = infoEmbed;

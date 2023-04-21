@@ -4,13 +4,13 @@ const { infoEmbed } = require('../modules/embed');
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('help')
-		.setDescription('Learn my commands and receive information about the bot!'),
+		.setDescription('Learn my commands and receive information about basic commands'),
 	async execute(interaction, client) {
 
     const embed = infoEmbed(client)
       .setTitle(`About ${client.user.username}`)
       .setDescription(`**${client.user.username}** is a simple application to enhance your `
-        + `role-playing experience through the use of a **full alias/character system** and`
+        + `role-playing experience through the use of a **full alias/character system** and `
         + `an **advanced dice system**.`
         + `\n\nHere are some commands to get you started:`)
       .addFields([

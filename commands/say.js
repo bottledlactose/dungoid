@@ -51,7 +51,8 @@ module.exports = {
     // Ensure a character with the specified tag actually exists
     if (!character) {
       const embed = errorEmbed(client, {
-        description: `You don't have a character with tag \`${tag}\`!`
+        description: `You don't have a character with tag \`${tag}\`! `
+          + `Your message was:\n\`\`\`${message}\`\`\``
       });
 
       await interaction.reply({ embeds: [embed], ephemeral: true });

@@ -76,6 +76,10 @@ module.exports = {
       content: message,
     });
 
+    // There's no way to not send a reply to an interaction...
+    const reply = await interaction.reply({ content: '** **', ephemeral: true });
+    setTimeout(() => reply.delete(), 1);
+
     // Get the channel ID to log moderation information to
     const channelId = await logData.get(interaction.guild);
 
@@ -106,9 +110,5 @@ module.exports = {
     }
 
     await charactersData.message(interaction.user, tag, message);
-
-    // There's no way to not send a reply to an interaction...
-    const reply = await interaction.reply({ content: '** **', ephemeral: true });
-    setTimeout(() => reply.delete(), 1);
 	},
 };

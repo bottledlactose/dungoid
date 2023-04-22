@@ -105,7 +105,7 @@ module.exports = {
       });
     }
 
-    // TODO: Start counting some user stats here
+    await charactersData.message(interaction.user, tag, message);
 
     // There's no way to not send a reply to an interaction...
     const reply = await interaction.reply({ content: '** **', ephemeral: true });

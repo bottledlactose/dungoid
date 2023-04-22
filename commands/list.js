@@ -38,9 +38,23 @@ module.exports = {
     });
 
     for (const character of characters) {
+      const messageCount = character.messageCount || 0;
+      const messageAverage = character.messageAverage || [];
+
+      let average = 0;
+
+      if (messageAverage.length > 0) {
+
+        for (const count of messageAverage)
+          average += count;
+
+        average /= messageAverage.length;
+      }
+
       embed.addFields({
         name: character.name,
-        value: `tag: \`${character.tag}\` · [avatar](${character.avatarURL})`,
+        value: `tag: \`${character.tag}\` · messages: \`${messageCount}\` · [avatar](${character.avatarURL})\n`
+          + `avg. message length: \`${average}\` (out of last \`${messageAverage.length}\`)`,
       });
     }
 

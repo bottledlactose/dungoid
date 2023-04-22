@@ -1,6 +1,6 @@
 const { SlashCommandBuilder, EmbedBuilder, ButtonBuilder, ButtonStyle, ActionRowBuilder } = require('discord.js');
 const { charactersData, logData } = require('../modules/data');
-const { errorEmbed } = require('../modules/embed');
+const { errorEmbed, logEmbed } = require('../modules/embed');
 const { hasManageWebhooks } = require('../modules/permissions');
 
 module.exports = {
@@ -84,9 +84,11 @@ module.exports = {
       // Fetch the channel from the channel caching collection
       const channel = interaction.guild.channels.cache.get(channelId);
 
-      const embed = new EmbedBuilder()
-        .setAuthor({ name: character.name, iconURL: character.avatarURL })
-        .setDescription(message);
+      const embed = logEmbed(client, {
+        description: message
+      })
+      .setAuthor({ name: character.name, iconURL: character.avatarURL })
+      .setFooter({ text: `ID: ${webhookMessage.id}` });
 
       const button = new ButtonBuilder()
         .setLabel('Jump')
@@ -97,7 +99,7 @@ module.exports = {
         .addComponents(button);
 
       channel.send({
-        content: `New message sent by ${interaction.user}:`,
+        content: `New message sent by ${interaction.user} in <#${interaction.channel.id}>:`,
         embeds: [embed],
         components: [row]
       });

@@ -11,7 +11,17 @@ module.exports = {
         .setName('tag')
         .setDescription('What is the unique tag for your character?')
         .setRequired(true)
-        .setMaxLength(6)),
+        .setAutocomplete(true)),
+  async autocomplete(interaction) {
+    const characters = await charactersData.get(interaction.user);
+
+    const focused = interaction.options.getFocused().toLowerCase();
+    const filtered = characters.filter(choice => choice.name.toLowerCase().startsWith(focused));
+
+    await interaction.respond(
+      filtered.map(choice => ({ name: choice.name, value: choice.tag })),
+    );
+  },
 	async execute(interaction, client) {
     // Fetch the input values from the interaction's options
     const tag = interaction.options.getString('tag');

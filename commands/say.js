@@ -1,4 +1,4 @@
-const { SlashCommandBuilder, PermissionsBitField, EmbedBuilder, ButtonBuilder, ButtonStyle, ActionRowBuilder } = require('discord.js');
+const { SlashCommandBuilder, EmbedBuilder, ButtonBuilder, ButtonStyle, ActionRowBuilder } = require('discord.js');
 const { charactersData, logData } = require('../modules/data');
 const { errorEmbed } = require('../modules/embed');
 const { hasManageWebhooks } = require('../modules/permissions');
@@ -8,16 +8,26 @@ module.exports = {
 		.setName('say')
 		.setDescription('Say your message as one of your characters')
     .addStringOption(option =>
-        option
-          .setName('tag')
-          .setDescription('What is the unique tag for your character?')
-          .setRequired(true)
-          .setMaxLength(6))
+      option
+        .setName('tag')
+        .setDescription('What is the unique tag for your character?')
+        .setRequired(true)
+        .setAutocomplete(true))
     .addStringOption(option =>
       option
         .setName('message')
         .setDescription('What do you want your character to say?')
         .setRequired(true)),
+  async autocomplete(interaction) {
+    const characters = await charactersData.get(interaction.user);
+
+    const focused = interaction.options.getFocused().toLowerCase();
+    const filtered = characters.filter(choice => choice.name.toLowerCase().startsWith(focused));
+
+    await interaction.respond(
+      filtered.map(choice => ({ name: choice.name, value: choice.tag })),
+    );
+  },
 	async execute(interaction, client) {
     // Fetch the input values from the interaction's options
     const tag = interaction.options.getString('tag');
@@ -92,6 +102,8 @@ module.exports = {
         components: [row]
       });
     }
+
+    // TODO: Start counting some user stats here
 
     // There's no way to not send a reply to an interaction...
     const reply = await interaction.reply({ content: '** **', ephemeral: true });

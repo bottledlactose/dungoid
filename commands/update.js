@@ -12,12 +12,22 @@ module.exports = {
         .setName('tag')
         .setDescription('What is the unique tag for your character?')
         .setRequired(true)
-        .setMaxLength(6))
+        .setAutocomplete(true))
     .addAttachmentOption(option =>
       option
         .setName('avatar')
         .setDescription('What does your character look like?')
         .setRequired(true)),
+  async autocomplete(interaction) {
+    const characters = await charactersData.get(interaction.user);
+
+    const focused = interaction.options.getFocused().toLowerCase();
+    const filtered = characters.filter(choice => choice.name.toLowerCase().startsWith(focused));
+
+    await interaction.respond(
+      filtered.map(choice => ({ name: choice.name, value: choice.tag })),
+    );
+  },
 	async execute(interaction, client) {
     const tag = interaction.options.getString('tag');
     const avatar = interaction.options.getAttachment('avatar');

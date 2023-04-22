@@ -1,6 +1,7 @@
 const { SlashCommandBuilder, PermissionsBitField, EmbedBuilder, ButtonBuilder, ButtonStyle, ActionRowBuilder } = require('discord.js');
 const { charactersData, logData } = require('../modules/data');
 const { errorEmbed } = require('../modules/embed');
+const { hasManageWebhooks } = require('../modules/permissions');
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -18,60 +19,59 @@ module.exports = {
         .setDescription('What do you want your character to say?')
         .setRequired(true)),
 	async execute(interaction, client) {
+    // Fetch the input values from the interaction's options
     const tag = interaction.options.getString('tag');
     const message = interaction.options.getString('message');
 
-    const characters = await charactersData.get(interaction.user);
-    let character = null;
+    // Make sure the application is allowed to access webhooks which is needed to proxy messages
+    if (!hasManageWebhooks(interaction.guild)) {
 
-    for (const c of characters) {
-      if (c.tag === tag) {
-        character = c;
-        break;
-      }
-    }
-
-    if (!character) {
-      const embed = errorEmbed(client)
-        .setDescription(`You don't have a character with tag \`${tag}\`!`);
+      const embed = errorEmbed(client, {
+        title: 'Missing permissions!',
+        description: 'I don\'t have permissions to \`Manage Webhooks\`! Please ask your server administrator to enable them.'
+      });
 
       await interaction.reply({ embeds: [embed], ephemeral: true });
       return;
     }
 
-    if (!interaction.guild.members.me.permissions.has(PermissionsBitField.Flags.ManageWebhooks)) {
+    // Try to fetch a character with the specified tag
+    const { character } = await charactersData.single(interaction.user, tag) || {};
 
-      const embed = errorEmbed(client)
-        .setTitle('Missing permissions!')
-        .setDescription(`I don't have permissions to \`Manage Webhooks\`! `
-          + `Please ask your server administrator to enable them.`);
+    // Ensure a character with the specified tag actually exists
+    if (!character) {
+      const embed = errorEmbed(client, {
+        description: `You don't have a character with tag \`${tag}\`!`
+      });
 
-      await interaction.reply({ embeds: [embed] });
+      await interaction.reply({ embeds: [embed], ephemeral: true });
       return;
     }
 
-    let webhooks = await interaction.channel.fetchWebhooks();
-    webhooks = webhooks.filter(w => w.name === client.user.username);
+    // Attempt to fetch the first webhook that is named after the client's username
+    let webhook = await interaction.channel.fetchWebhooks()
+      .then(webhooks => webhooks.filter(w => w.name === client.user.username).first());
 
-    let webhook = null;
-
-    if (webhooks.size == 0) {
+    // Create a new webhook if there was none found yet and use it immediately
+    if (!webhook) {
       webhook = await interaction.channel.createWebhook({
         name: client.user.username
       });
-    } else {
-      webhook = webhooks.first();
     }
 
+    // Construct a new message to be sent through the webhook
     const webhookMessage = await webhook.send({
       avatarURL: character.avatarURL,
       username: character.name,
       content: message,
     });
 
+    // Get the channel ID to log moderation information to
     const channelId = await logData.get(interaction.guild);
 
+    // Check if the channel exists before proceeding
     if (channelId && interaction.guild.channels.cache.has(channelId)) {
+      // Fetch the channel from the channel caching collection
       const channel = interaction.guild.channels.cache.get(channelId);
 
       const embed = new EmbedBuilder()

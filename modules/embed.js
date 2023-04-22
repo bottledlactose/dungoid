@@ -18,7 +18,17 @@ const baseEmbed = client => {
 };
 
 // Define some shorthand embed type builders with their respective color
-const errorEmbed = client => baseEmbed(client).setColor(colors.error);
+const errorEmbed = (client, options) => {
+  const result = baseEmbed(client).setColor(colors.error);
+
+  if ('title' in options)
+    result.setTitle(options.title);
+
+  if ('description' in options)
+    result.setDescription(options.description);
+
+  return result;
+};
 const successEmbed = client => baseEmbed(client).setColor(colors.success);
 const infoEmbed = client => baseEmbed(client).setColor(colors.info);
 

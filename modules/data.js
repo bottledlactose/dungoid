@@ -1,6 +1,8 @@
 const { QuickDB } = require('quick.db');
 const db = new QuickDB();
 
+const { maxAverageHistory } = require('../config.json');
+
 const charactersData = {
   get: async user => await db.get(`characters_${user.id}`) || [],
   set: async (user, characters) => await db.set(`characters_${user.id}`, characters),
@@ -45,6 +47,28 @@ const charactersData = {
 
     return false;
   },
+  message: async (user, tag, message) => {
+    const characters = await charactersData.get(user);
+
+    for (const i in characters) {
+      if (characters[i].tag === tag) {
+        ++characters[i].messageCount;
+
+        if (!('messageAverage' in characters[i]))
+          characters[i].messageAverage = [];
+
+        if (characters[i].messageAverage.length >= maxAverageHistory)
+          characters[i].messageAverage.shift();
+
+        characters[i].messageAverage.push(message.length);
+        await charactersData.set(user, characters);
+
+        return true;
+      }
+    }
+
+    return false;
+  }
 };
 
 const logData = {

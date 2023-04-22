@@ -65,7 +65,7 @@ module.exports = {
         description: `Your character **${character.name}**'s avatar updated successfully! Thank you for using ${client.user.username}!`,
       }).setImage(avatar.url);
 
-      await interaction.reply({ embeds: [embed], ephemeral: true });
+      await interaction.reply({ embeds: [embed] });
     }
 	},
 };

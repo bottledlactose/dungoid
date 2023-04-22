@@ -49,15 +49,16 @@ module.exports = {
           average += count;
 
         average /= messageAverage.length;
+        average = Math.round(average);
       }
 
       embed.addFields({
         name: character.name,
-        value: `tag: \`${character.tag}\` · messages: \`${messageCount}\` · [avatar](${character.avatarURL})\n`
-          + `avg. message length: \`${average}\` (out of last \`${messageAverage.length}\`)`,
+        value: `tag: \`${character.tag}\` · [avatar](${character.avatarURL})\n`
+          + `messages: \`${messageCount}\` · average: \`${average}\` (of last \`${messageAverage.length}\`)`,
       });
     }
 
-		await interaction.reply({ embeds: [embed], ephemeral: true });
+		await interaction.reply({ embeds: [embed] });
 	},
 };

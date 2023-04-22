@@ -83,6 +83,6 @@ module.exports = {
       description: `You can now use your character **${name}** with \`/say\` or view all of your characters using \`/list\`. Have fun!`,
     }).setImage(avatar.url);
 
-    await interaction.reply({ embeds: [embed], ephemeral: true });
+    await interaction.reply({ embeds: [embed] });
 	},
 };

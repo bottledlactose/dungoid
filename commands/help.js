@@ -23,6 +23,6 @@ module.exports = {
         { name: '\`/log\`', value: 'Set up a log channel to post all character messages to (Requires \`Administrator\`!)' },
       ]);
 
-		await interaction.reply({ embeds: [embed], ephemeral: true });
+		await interaction.reply({ embeds: [embed] });
 	},
 };

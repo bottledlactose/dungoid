@@ -23,39 +23,39 @@ module.exports = {
     const avatar = interaction.options.getAttachment('avatar');
 
     // Make sure the user is actually uploading an image
-    if (!avatar.contentType.startsWith('image/')) {
+    if (!avatar.contentType.startsWith('image')) {
 
-      const embed = errorEmbed(client)
-        .setTitle('Invalid avatar!')
-        .setDescription(`The uploaded avatar attachment must be an image.`);
+      const embed = errorEmbed(client, {
+        title: 'Invalid avatar format!',
+        description: 'The uploaded avatar attachment must be an image. Please try again with a file with an extension such as \`.png\` or \`.jpg\`.'
+      });
 
       await interaction.reply({ embeds: [embed], ephemeral: true });
       return;
     }
 
-    let characters = await charactersData.get(interaction.user);
+    const { character } = await charactersData.single(interaction.user, tag) || {};
 
-    for (const i in characters) {
-      if (characters[i].tag == tag) {
+    const success = await charactersData.update(interaction.user, tag, {
+      avatarURL: avatar.url
+    });
 
-        characters[i].avatarURL = avatar.url;
-        await charactersData.set(interaction.user, characters);
+    if (!success) {
 
-        const embed = successEmbed(client)
-          .setTitle('Character updated!')
-          .setImage(avatar.url)
-          .setDescription(`${characters[i].name}\'s avatar has been successfully updated.`);
+      const embed = errorEmbed(client, {
+        title: 'Failed to update character!',
+        description: `You don't have any characters with the tag \`${tag}\`! You can view your characters with \`/list\`.`,
+      });
 
-        await interaction.reply({ embeds: [embed], ephemeral: true });
-        return;
-      }
+      await interaction.reply({ embeds: [embed], ephemeral: true });
+    } else {
+
+      const embed = successEmbed(client, {
+        title: 'Character updated!',
+        description: `Your character **${character.name}**'s avatar updated successfully! Thank you for using ${client.user.username}!`,
+      }).setImage(avatar.url);
+
+      await interaction.reply({ embeds: [embed], ephemeral: true });
     }
-
-    const embed = errorEmbed(client)
-      .setTitle('Failed to update character!')
-      .setDescription(`You don't have any characters with the tag \`${tag}\`! `
-        + `You can view your characters with \`/list\`.`);
-
-    await interaction.reply({ embeds: [embed], ephemeral: true });
 	},
 };

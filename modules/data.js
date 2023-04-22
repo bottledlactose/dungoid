@@ -14,7 +14,37 @@ const charactersData = {
     }
 
     return null;
-  }
+  },
+  update: async (user, tag, data) => {
+    const characters = await charactersData.get(user);
+
+    for (const i in characters) {
+      if (characters[i].tag === tag) {
+        // Update the values of the collection
+        characters[i].avatarURL = data.avatarURL;
+        // Overwrite the old character data array with the new one
+        await charactersData.set(user, characters);
+        return true;
+      }
+    }
+
+    return false;
+  },
+  delete: async (user, tag) => {
+    const characters = await charactersData.get(user);
+
+    for (const i in characters) {
+      if (characters[i].tag === tag) {
+        // Splice the index of the collection
+        characters.splice(i, 1);
+        // Overwrite the old character data array with the new one
+        await charactersData.set(user, characters);
+        return true;
+      }
+    }
+
+    return false;
+  },
 };
 
 const logData = {

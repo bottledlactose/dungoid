@@ -15,9 +15,10 @@ module.exports = {
     const channel = interaction.options.getChannel('channel');
     await logData.set(interaction.guild, channel);
 
-    const embed = successEmbed(client)
-      .setTitle('Log channel set!')
-      .setDescription(`New moderation messages will now be logged to <#${channel.id}>!`);
+    const embed = successEmbed(client, {
+      title: 'Log channel set!',
+      description: `New moderation messages will now be logged to <#${channel.id}>!`,
+    });
 
 		await interaction.reply({ embeds: [embed], ephemeral: true });
 	},

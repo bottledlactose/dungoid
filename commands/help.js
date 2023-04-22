@@ -15,9 +15,12 @@ module.exports = {
         + `\n\nHere are some commands to get you started:`)
       .addFields([
         { name: '\`/create\`', value: 'Create a new character' },
+        { name: '\`/delete\`', value: 'Delete an existing character' },
+        { name: '\`/update\`', value: 'Update an existing character\'s avatar' },
         { name: '\`/list\`', value: 'View your character list' },
         { name: '\`/say\`', value: 'Send your message as one of your characters' },
         { name: '\`/roll\`', value: 'Roll a virtual dice with the given amount of sides' },
+        { name: '\`/log\`', value: 'Set up a log channel to post all character messages to (Requires \`Administrator\`!)' },
       ]);
 
 		await interaction.reply({ embeds: [embed], ephemeral: true });

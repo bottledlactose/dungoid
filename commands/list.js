@@ -8,37 +8,40 @@ module.exports = {
 		.setName('list')
 		.setDescription('List all your aliases or characters'),
 	async execute(interaction, client) {
+    // Fetch a list of all characters to display in the list embed
     const characters = await charactersData.get(interaction.user);
-    const embed = infoEmbed(client);
 
-    if (characters.length == 0) {
-      // Set up a fallback message since no characters were found
-      embed.setDescription('You have no characters yet! Start by creating one using \`/create\`');
-    } else {
-      embed
-        .setTitle('Characters')
-        .setDescription(`You have a total of **${characters.length}** out of **${maxCharacters}** characters! `
-          + `You can create new characters using \`/create\` and delete them using \`/delete\`.`);
+    const embed = infoEmbed(client, {
+      title: 'Characters',
+    })
 
-      // Sort all characters by display name
-      characters.sort((a, b) => {
-        if (a.name < b.name)
-          return -1;
+    // Let's check if the user has no characters yet to show an alternative message
+    if (characters.length === 0) {
+      embed.setDescription('You have no characters yet! You can start creating one with \`/create\`. Alternatively, you may use the \`/help\` command to get you started.');
 
-        if (a.name > b.name)
-          return 1;
+      await interaction.reply({ embeds: [embed], ephemeral: true });
+      return;
+    }
 
-        return 0;
+    // Set the description to some useful information about the user's character counters
+    embed.setDescription(`You have a total of **${characters.length}** out of **${maxCharacters}** characters! You can create new characters using \`/create\` and delete them using \`/delete\`. Thank you for using ${client.user.username}!`);
+
+    // Sort all characters by display name
+    characters.sort((a, b) => {
+      if (a.name < b.name)
+        return -1;
+
+      if (a.name > b.name)
+        return 1;
+
+      return 0;
+    });
+
+    for (const character of characters) {
+      embed.addFields({
+        name: character.name,
+        value: `tag: \`${character.tag}\` · [avatar](${character.avatarURL})`,
       });
-
-      for (const i in characters) {
-        // Add a new field entry for the current character
-        embed.addFields({
-          name: characters[i].name,
-          value: `tag: \`${characters[i].tag}\``
-            + ` · [avatar](${characters[i].avatarURL})`,
-        });
-      }
     }
 
 		await interaction.reply({ embeds: [embed], ephemeral: true });

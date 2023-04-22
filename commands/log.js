@@ -5,7 +5,7 @@ const { successEmbed } = require('../modules/embed');
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('log')
-		.setDescription('Set up a message log channel for moderators')
+		.setDescription('Set up a message log channel')
     .setDefaultMemberPermissions(PermissionsBitField.Flags.Administrator)
     .addChannelOption(option =>
       option.setName('channel')
@@ -17,9 +17,9 @@ module.exports = {
 
     const embed = successEmbed(client, {
       title: 'Log channel set!',
-      description: `New moderation messages will now be logged to <#${channel.id}>!`,
+      description: `New log messages will now be logged to <#${channel.id}>!`,
     });
 
-		await interaction.reply({ embeds: [embed], ephemeral: true });
+		await interaction.reply({ embeds: [embed] });
 	},
 };

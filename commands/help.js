@@ -14,6 +14,7 @@ module.exports = {
         + `an **advanced dice system**.`
         + `\n\nHere are some commands to get you started:`)
       .addFields([
+        { name: '\`/support\`', value: 'Receive a link to the support server' },
         { name: '\`/create\`', value: 'Create a new character' },
         { name: '\`/delete\`', value: 'Delete an existing character' },
         { name: '\`/update\`', value: 'Update an existing character\'s avatar' },

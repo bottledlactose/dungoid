@@ -1,7 +1,6 @@
 const { SlashCommandBuilder } = require('discord.js');
 const { charactersData } = require('../modules/data');
 const { errorEmbed, successEmbed } = require('../modules/embed');
-const { maxCharacters } = require('../config.json');
 
 module.exports = {
 	data: new SlashCommandBuilder()

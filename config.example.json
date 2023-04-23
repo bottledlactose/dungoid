@@ -2,5 +2,6 @@
 	"token": "<YOUR TOKEN HERE>",
   "clientId": "<YOUR CLIENT ID HERE>",
   "maxCharacters": 20,
-  "maxAverage": 20
+  "maxAverage": 20,
+  "supportUrl": "<YOUR SERVER CODE HERE>"
 }

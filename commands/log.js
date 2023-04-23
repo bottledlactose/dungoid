@@ -17,7 +17,7 @@ module.exports = {
 
     const embed = successEmbed(client, {
       title: 'Log channel set!',
-      description: `New log messages will now be logged to <#${channel.id}>!`,
+      description: `New log messages will now be logged to <#${channel.id}>! Please note that if your logging channel is private, you must manually grant the \`Send Messages\` permission to **${client.user}** to allow me to post there.`,
     });
 
 		await interaction.reply({ embeds: [embed] });

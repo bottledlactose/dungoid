@@ -1,7 +1,9 @@
 const { PermissionsBitField } = require('discord.js');
 
-const has = (guild, permissions) => guild.members.me.permissions.has(permissions);
-const hasManageWebhooks = guild => has(guild, PermissionsBitField.Flags.ManageWebhooks);
+const has = (channel, permissions) => channel.permissionsFor(channel.guild.members.me).has(permissions);
 
-module.exports.has = has;
+const hasManageWebhooks = channel => has(channel, PermissionsBitField.Flags.ManageWebhooks);
+const hasSendMessages = channel => has(channel, PermissionsBitField.Flags.SendMessages);
+
 module.exports.hasManageWebhooks = hasManageWebhooks;
+module.exports.hasSendMessages = hasSendMessages;

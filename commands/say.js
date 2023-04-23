@@ -1,7 +1,7 @@
-const { SlashCommandBuilder, EmbedBuilder, ButtonBuilder, ButtonStyle, ActionRowBuilder } = require('discord.js');
+const { SlashCommandBuilder, ButtonBuilder, ButtonStyle, ActionRowBuilder } = require('discord.js');
 const { charactersData, logData } = require('../modules/data');
 const { errorEmbed, logEmbed } = require('../modules/embed');
-const { hasManageWebhooks } = require('../modules/permissions');
+const { hasManageWebhooks, hasSendMessages } = require('../modules/permissions');
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -34,7 +34,7 @@ module.exports = {
     const message = interaction.options.getString('message');
 
     // Make sure the application is allowed to access webhooks which is needed to proxy messages
-    if (!hasManageWebhooks(interaction.guild)) {
+    if (!hasManageWebhooks(interaction.channel)) {
 
       const embed = errorEmbed(client, {
         title: 'Missing permissions!',
@@ -89,27 +89,35 @@ module.exports = {
       // Fetch the channel from the channel caching collection
       const channel = interaction.guild.channels.cache.get(channelId);
 
-      const embed = logEmbed(client, {
-        description: message
-      })
-      .setAuthor({ name: character.name, iconURL: character.avatarURL })
-      .setFooter({ text: `ID: ${webhookMessage.id}` });
+      if (hasSendMessages(channel)) {
 
-      const button = new ButtonBuilder()
-        .setLabel('Jump')
-        .setURL(webhookMessage.url)
-        .setStyle(ButtonStyle.Link);
+        const embed = logEmbed(client, {
+          description: message
+        })
+        .setAuthor({ name: character.name, iconURL: character.avatarURL })
+        .setFooter({ text: `ID: ${webhookMessage.id}` });
 
-      const row = new ActionRowBuilder()
-        .addComponents(button);
+        const button = new ButtonBuilder()
+          .setLabel('Jump')
+          .setURL(webhookMessage.url)
+          .setStyle(ButtonStyle.Link);
 
-      channel.send({
-        content: `New message sent by ${interaction.user} in <#${interaction.channel.id}>:`,
-        embeds: [embed],
-        components: [row]
-      });
+        const row = new ActionRowBuilder()
+          .addComponents(button);
+
+        try {
+          await channel.send({
+            content: `New message sent by ${interaction.user} in <#${interaction.channel.id}>:`,
+            embeds: [embed],
+            components: [row]
+          });
+        } catch (error) {
+          console.error(error);
+        }
+      }
     }
 
+    // TODO: Refactor this
     await charactersData.message(interaction.user, tag, message);
 	},
 };

@@ -38,24 +38,25 @@ module.exports = {
     });
 
     for (const character of characters) {
-      const messageCount = character.messageCount || 0;
-      const messageAverage = character.messageAverage || [];
+      const stats = character.stats || {};
 
-      let average = 0;
+      const messages = stats.messages || 0;
+      const average = stats.average || [];
 
-      if (messageAverage.length > 0) {
+      let averageCount = 0;
 
-        for (const count of messageAverage)
-          average += count;
+      if (average.length > 0) {
+        for (const count of average)
+          averageCount += count;
 
-        average /= messageAverage.length;
-        average = Math.round(average);
+        averageCount /= average.length;
+        averageCount = Math.round(averageCount);
       }
 
       embed.addFields({
         name: character.name,
         value: `tag: \`${character.tag}\` · [avatar](${character.avatarURL})\n`
-          + `messages: \`${messageCount}\` · average: \`${average}\` (of last \`${messageAverage.length}\`)`,
+          + `messages: \`${messages}\` · average: \`${averageCount}\` (of last \`${average.length}\`)`,
       });
     }
 

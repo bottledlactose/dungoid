@@ -6,7 +6,7 @@ module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('log')
 		.setDescription('Set up a message log channel')
-    .setDefaultMemberPermissions(PermissionsBitField.Flags.Administrator)
+    .setDefaultMemberPermissions(PermissionsBitField.Flags.ManageChannels)
     .addChannelOption(option =>
       option.setName('channel')
         .setDescription('To which channel would you like to log messages?')

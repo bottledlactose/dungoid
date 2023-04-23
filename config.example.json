@@ -2,5 +2,5 @@
 	"token": "<YOUR TOKEN HERE>",
   "clientId": "<YOUR CLIENT ID HERE>",
   "maxCharacters": 20,
-  "maxAverageHistory": 20
+  "maxAverage": 20
 }

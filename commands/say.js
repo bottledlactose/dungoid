@@ -1,5 +1,5 @@
-const { SlashCommandBuilder, ButtonBuilder, ButtonStyle, ActionRowBuilder } = require('discord.js');
-const { charactersData, logData } = require('../modules/data');
+const { SlashCommandBuilder, ButtonBuilder, ButtonStyle, ActionRowBuilder, PermissionsBitField } = require('discord.js');
+const { charactersData, statsData, logData } = require('../modules/data');
 const { errorEmbed, logEmbed } = require('../modules/embed');
 const { hasManageWebhooks, hasSendMessages } = require('../modules/permissions');
 
@@ -112,12 +112,19 @@ module.exports = {
             components: [row]
           });
         } catch (error) {
-          console.error(error);
+          // Only notify the user if they have permissions to fix the issue...
+          if (interaction.member.permissions.has(PermissionsBitField.Flags.ManageChannels)) {
+            const embed = errorEmbed(client, {
+              title: `Failed to log message!`,
+              description: `Your message could not be logged to <#${channel.id}>. You most likely need to enable \`Send Messages\` on the specified channel to allow me to post there.`
+            });
+
+            await interaction.followUp({ embeds: [embed], ephemeral: true });
+          }
         }
       }
     }
 
-    // TODO: Refactor this
-    await charactersData.message(interaction.user, tag, message);
+    await statsData.add(interaction.user, tag, message);
 	},
 };

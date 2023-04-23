@@ -6,10 +6,25 @@ const { maxCharacters } = require('../config.json');
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('list')
-		.setDescription('List all your aliases or characters'),
-	async execute(interaction, client) {
-    // Fetch a list of all characters to display in the list embed
+		.setDescription('List your aliases or characters')
+    .addUserOption(option =>
+      option
+        .setName('user')
+        .setDescription('Which user\'s characters do you want to list?')),
+  async autocomplete(interaction) {
     const characters = await charactersData.get(interaction.user);
+
+    const focused = interaction.options.getFocused().toLowerCase();
+    const filtered = characters.filter(choice => choice.name.toLowerCase().startsWith(focused));
+
+    await interaction.respond(
+      filtered.map(choice => ({ name: choice.name, value: choice.tag })),
+    );
+  },
+	async execute(interaction, client) {
+    const user = interaction.options.getUser('user') || interaction.user;
+    // Fetch a list of all characters to display in the list embed
+    const characters = await charactersData.get(user);
 
     const embed = infoEmbed(client, {
       title: 'Characters',
@@ -17,7 +32,7 @@ module.exports = {
 
     // Let's check if the user has no characters yet to show an alternative message
     if (characters.length === 0) {
-      embed.setDescription('You have no characters yet! You can start creating one with \`/create\`. Alternatively, you may use the \`/help\` command to get you started.');
+      embed.setDescription(`${user.id == interaction.user.id ? 'You have' : `${user} has`} no characters yet! You can start creating one with \`/create\`. Alternatively, you may use the \`/help\` command to get you started.`);
 
       await interaction.reply({ embeds: [embed], ephemeral: true });
       return;

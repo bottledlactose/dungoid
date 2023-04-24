@@ -39,7 +39,7 @@ module.exports = {
     }
 
     // Set the description to some useful information about the user's character counters
-    embed.setDescription(`You have a total of **${characters.length}** out of **${maxCharacters}** characters! You can create new characters using \`/create\` and delete them using \`/delete\`. Thank you for using ${client.user.username}!`);
+    embed.setDescription(`${user.id == interaction.user.id ? 'You have' : `${user} has`} a total of **${characters.length}** out of **${maxCharacters}** characters! You can create new characters using \`/create\` and delete them using \`/delete\`. Thank you for using ${client.user.username}!`);
 
     // Sort all characters by display name
     characters.sort((a, b) => {

@@ -2,5 +2,11 @@ const { QuickDB } = require('quick.db');
 const db = new QuickDB();
 
 (async () => {
-  await db.all().then(result => console.log(result.value));
+  const data = await db.startsWith('characters_');
+
+  for (const user of data) {
+    for (const character of user.value) {
+      console.log(character);
+    }
+  }
 })();

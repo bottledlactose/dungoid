@@ -44,7 +44,7 @@ module.exports = {
         description: `Your character **${character.name}** has been deleted.`
       }).setImage(character.avatarURL);
 
-      await interaction.reply({ embeds: [embed] });
+      await interaction.reply({ embeds: [embed], ephemeral: true });
     }
 	},
 };

@@ -20,6 +20,6 @@ module.exports = {
       description: `New log messages will now be logged to <#${channel.id}>! Please note that if your logging channel is private, you must manually grant the \`Send Messages\` permission to **${client.user}** to allow me to post there.`,
     });
 
-		await interaction.reply({ embeds: [embed] });
+		await interaction.reply({ embeds: [embed], ephemeral: true });
 	},
 };

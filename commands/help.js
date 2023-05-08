@@ -1,5 +1,6 @@
 const { SlashCommandBuilder } = require('discord.js');
 const { infoEmbed } = require('../modules/embed');
+const { clientId } = require('../config.json');
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -11,7 +12,7 @@ module.exports = {
       .setTitle(`About ${client.user.username}`)
       .setDescription(`**${client.user.username}** is a simple application to enhance your `
         + `role-playing experience through the use of a **full alias/character system** and `
-        + `an **advanced dice system**.`
+        + `an **advanced dice system**. Please consider [rating the bot](https://top.gg/bot/${clientId}#reviews) if you like it!`
         + `\n\nHere are some commands to get you started:`)
       .addFields([
         { name: '\`/support\`', value: 'Receive a link to the support server' },

@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "deploy": "node ./scripts/deploy.js",
-    "dev": "nodemon ./bot.js"
+    "dev": "nodemon ./bot.js",
+    "characters": "node ./scripts/characters.js",
+    "guilds": "node ./scripts/guilds.js"
   },
   "repository": {
     "type": "git",

@@ -1,8 +1,7 @@
 const { QuickDB } = require('quick.db');
 const db = new QuickDB();
 
-const migration = async () => {
-
+(async () => {
   const charactersData = await db.startsWith('characters_');
 
   for (const data of charactersData) {
@@ -17,6 +16,4 @@ const migration = async () => {
     await db.set(data.id, data.value);
     console.log(`${data.id} successfully migrated!`);
   }
-}
-
-migration();
+})();

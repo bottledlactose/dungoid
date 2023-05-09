@@ -35,11 +35,11 @@ const updatePresence = client => {
 
 client.once(Events.ClientReady, c => {
 	console.info(`Ready! Logged in as ${c.user.tag}`);
-  updatePresence();
+  updatePresence(client);
 });
 
 client.on(Events.GuildCreate, () => {
-  updatePresence();
+  updatePresence(client);
 });
 
 client.on(Events.InteractionCreate, async interaction => {

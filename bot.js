@@ -24,15 +24,22 @@ for (const file of commandFiles) {
 	}
 }
 
-client.once(Events.ClientReady, c => {
-	console.info(`Ready! Logged in as ${c.user.tag}`);
-
+const updatePresence = client => {
   // Set up the bot user's custom status
   client.user.setPresence({
     activities: [
       { name: `/help /create /roll`, type: ActivityType.Listening }
     ]
   });
+};
+
+client.once(Events.ClientReady, c => {
+	console.info(`Ready! Logged in as ${c.user.tag}`);
+  updatePresence();
+});
+
+client.on(Events.GuildCreate, () => {
+  updatePresence();
 });
 
 client.on(Events.InteractionCreate, async interaction => {

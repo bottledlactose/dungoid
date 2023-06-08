@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="https://raw.githubusercontent.com/bottledlactose/dungoid/trunk/assets/icon.png" alt="icon" />
+</p>
+
 # Dungoid
 
 A general-purpose roleplaying Discord bot featuring useful commands such as `/roll` and character/alias creation commands.

@@ -27,6 +27,8 @@ The repository comes with some build-in scripts to make things easier. These scr
 - `npm run dev` - Starts up Nodemon, enabling automatic application reloads on file save
 - `npm run deploy` - Deploys all commands in `commands` to all guilds the application is in
 
+**NOTE:** `nodemon` has been temporarily disabled due to a security vulnerability with `semver` ([CVE-2022-25883](https://nvd.nist.gov/vuln/detail/CVE-2022-25883))
+
 ## Project Structure
 
 The project structure of Dungoid is fairly simple:

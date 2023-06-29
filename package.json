@@ -23,8 +23,5 @@
     "better-sqlite3": "^8.3.0",
     "discord.js": "^14.11.0",
     "quick.db": "^9.1.6"
-  },
-  "devDependencies": {
-    "nodemon": "^2.0.22"
   }
 }

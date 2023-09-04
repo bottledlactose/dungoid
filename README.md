@@ -1,3 +1,5 @@
+**NOTE:** This project is no longer maintained due to a major bug with the SQLite library, essentially wiping everyone's data every now and then for some unexplainable reason.
+
 <p align="center">
   <img src="https://raw.githubusercontent.com/bottledlactose/dungoid/trunk/assets/icon.png" alt="icon" />
 </p>
